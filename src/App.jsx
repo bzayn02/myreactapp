@@ -2,24 +2,36 @@ import { useEffect, useState } from 'react';
 
 import './App.css';
 
-function Counter({ startAt, storageKey }) {
-    const [count, setCount] = useState(() => {
-        const savedCounter = localStorage.getItem(storageKey);
-        return savedCounter !== null ? Number(savedCounter) : startAt;
-    });
+// function Counter({ startAt }) {
+//     const [count, setCount] = useState(() => {
+//         const storedCounter = localStorage.getItem('count');
+//         return storedCounter !== null ? Number(storedCounter) : startAt;
+//     });
+
+//     useEffect(() => {
+//         localStorage.setItem('count', count);
+//     }, [count]);
+
+//     return (
+//         <>
+//             <div>
+//                 <p>Clicked {count} times</p>
+//                 <button onClick={() => setCount(count + 1)}>Click Me</button>
+//             </div>
+//         </>
+//     );
+// }
+function Timer() {
+    const [seconds, setSeconds] = useState(0);
 
     useEffect(() => {
-        localStorage.setItem(storageKey, count);
-    }, [storageKey, count]);
+        const id = setInterval(() => {
+            setSeconds((s) => s + 1);
+        }, 1000);
 
-    return (
-        <>
-            <div>
-                <p>Clicked {count} times</p>
-                <button onClick={() => setCount(count + 1)}>Click Me</button>
-            </div>
-        </>
-    );
+        return () => clearInterval(id);
+    }, []);
+    return <p>{seconds} seconds</p>;
 }
 
-export default Counter;
+export default Timer;
